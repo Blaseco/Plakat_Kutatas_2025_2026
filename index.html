@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="hu" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParlLawSpeech Outdoor — Politikai Plakátkutató és Komparatív Elemző Platform (2025–2026)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090d16;
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+    }
+    .tab-active {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
+  <!-- FELSŐ KUTATÓI FEJLÉC -->
+  <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="px-2.5 py-0.5 text-xs font-mono font-semibold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full">
+              ParlLawSpeech Outdoor Korpusz v2.6
+            </span>
+            <span class="px-2.5 py-0.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+              ● Antigravity Local Ready
+            </span>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white mt-1">
+            Magyar Politikai Plakátkutató és Komparatív Elemző Platform (2025–2026)
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+            Politológiai, kampányfinanszírozási és vizuális szemiotikai kutatórendszer vágott sajtófotókkal
+          </p>
+        </div>
+
+        <!-- Navigációs fülek -->
+        <nav class="flex flex-wrap items-center gap-2">
+          <button onclick="switchTab('catalog')" id="tab-catalog" class="tab-active px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            1. Plakátkorpusz & Katalógus
+          </button>
+          <a href="comparison.html" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-1.5">
+            ⚖ Plakát-Komparátor Weboldal ↗
+          </a>
+          <button onclick="switchTab('compare')" id="tab-compare" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            2. Beépített Labor
+          </button>
+          <button onclick="switchTab('theory')" id="tab-theory" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            3. Politológiai Háttér
+          </button>
+          <button onclick="switchTab('add')" id="tab-add" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            + Új Plakát
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- FŐ TARTALMI Konténer -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- GYORS STATISZTIKAI SÁV -->
+    <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="glass-card p-3.5 rounded-xl">
+        <div class="text-xs text-slate-400 font-medium">Rekordok száma</div>
+        <div class="text-2xl font-extrabold text-white font-mono mt-1" id="stat-total">13 db</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">2025.04 – 2026.04</div>
+      </div>
+      <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-red-500">
+        <div class="text-xs text-slate-400 font-medium">Fidesz-tábor (Összes)</div>
+        <div class="text-2xl font-extrabold text-red-400 font-mono mt-1" id="stat-fidesz">11 db</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">Állami + Párt + Proxy</div>
+      </div>
+      <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-blue-500">
+        <div class="text-xs text-slate-400 font-medium">Ellenzéki / TISZA</div>
+        <div class="text-2xl font-extrabold text-blue-400 font-mono mt-1" id="stat-tisza">2 db</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">Oszlop + Lakossági molinó</div>
+      </div>
+      <div class="glass-card p-3.5 rounded-xl">
+        <div class="text-xs text-slate-400 font-medium">Állami (Kabinetiroda)</div>
+        <div class="text-2xl font-extrabold text-amber-400 font-mono mt-1">6 db</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">Közpénzes kormányzati</div>
+      </div>
+      <div class="glass-card p-3.5 rounded-xl">
+        <div class="text-xs text-slate-400 font-medium">Third-Party Proxy (NEM)</div>
+        <div class="text-2xl font-extrabold text-purple-400 font-mono mt-1">3 db</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">Negatív karaktergyilkosság</div>
+      </div>
+      <div class="glass-card p-3.5 rounded-xl">
+        <div class="text-xs text-slate-400 font-medium">Óriásplakát / Hirdetőoszlop</div>
+        <div class="text-2xl font-extrabold text-emerald-400 font-mono mt-1">77%</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">Kormánypárti felületfölény</div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 1. FÜL: PLAKÁTKORPUSZ ÉS KATALÓGUS         -->
+    <!-- ========================================== -->
+    <section id="view-catalog" class="space-y-6">
+      <!-- Szűrő és kereső vezérlőpult -->
+      <div class="glass-card p-4 rounded-xl space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Szabadszavas keresés</label>
+            <input type="text" id="filter-search" oninput="renderCatalog()" placeholder="Keresés szlogenre, szereplőre (pl. Zelenszkij, Berkó)..."
+              class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Politikai tábor</label>
+            <select id="filter-camp" onchange="renderCatalog()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+              <option value="ALL">Összes tábor (13)</option>
+              <option value="FIDESZ-TÁBOR">Fidesz-tábor (11)</option>
+              <option value="TISZA PÁRT">TISZA Párt (2)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Kibocsátó típusa (Politológiai kategória)</label>
+            <select id="filter-actor" onchange="renderCatalog()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+              <option value="ALL">Összes kibocsátói típus</option>
+              <option value="STATE">Állami hirdetés (Miniszterelnöki Kabinetiroda)</option>
+              <option value="PROXY">Harmadik feles proxy / CÖF / NEM / Gerilla</option>
+              <option value="PARTY">Hivatalos párt- és jelölti kampány</option>
+              <option value="GRASSROOTS">Lakossági grassroots (erkély / kerítés)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Kampánytónus (Valencia)</label>
+            <select id="filter-tone" onchange="renderCatalog()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+              <option value="ALL">Minden tónus</option>
+              <option value="NEGATIVE">Negatív / Elrettentő / Karaktertámadó</option>
+              <option value="POSITIVE">Pozitítv / Stabilitás / Jóléti ígéret</option>
+              <option value="MOBILIZING">Mobilizáló / Rendszerkritikus / Teaser</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs text-slate-400">
+          <div id="filter-count">Megjelenítve: 13 / 13 plakát</div>
+          <div class="flex items-center gap-2">
+            <span>Nézet:</span>
+            <button onclick="setCatalogLayout('grid')" id="btn-grid" class="px-2.5 py-1 rounded bg-blue-600 text-white font-medium">Kártyák</button>
+            <button onclick="setCatalogLayout('table')" id="btn-table" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-medium">Tudományos Táblázat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kártyás nézet -->
+      <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+      <!-- Táblázatos nézet -->
+      <div id="catalog-table-wrap" class="hidden overflow-x-auto glass-card rounded-xl">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="bg-slate-900/90 text-slate-300 border-b border-slate-800">
+              <th class="p-3.5 font-semibold">ID & Dátum</th>
+              <th class="p-3.5 font-semibold">Tábor & Kibocsátó</th>
+              <th class="p-3.5 font-semibold">Vágott Sajtófotó</th>
+              <th class="p-3.5 font-semibold">Plakátfelirat & Vizuális leírás</th>
+              <th class="p-3.5 font-semibold">Politológiai & Médiatudományi Elemzés</th>
+              <th class="p-3.5 font-semibold">Művelet</th>
+            </tr>
+          </thead>
+          <tbody id="catalog-table-body" class="divide-y divide-slate-800/80"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. FÜL: KOMPARATÍV PLAKÁTLABOR             -->
+    <!-- ========================================== -->
+    <section id="view-compare" class="hidden space-y-6">
+      <div class="glass-card p-5 rounded-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Szinkronizált Politikai Plakát-összehasonlító Laboratórium</h2>
+            <p class="text-xs text-slate-400">Válassz ki két plakátot a korpuszból, vagy tölts be egy előre összeállított politológiai kutatási presetet!</p>
+          </div>
+          <!-- Előre definiált kutatói összehasonlítások -->
+          <div class="flex flex-wrap gap-2">
+            <button onclick="loadPreset('HUN_PLAKAT_2026_010', 'HUN_PLAKAT_2026_009')" class="px-3 py-1.5 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-medium transition">
+              Preset 1: Fidesz Pozitív vs. NEM Proxy Negatív (Munkamegosztás)
+            </button>
+            <button onclick="loadPreset('HUN_PLAKAT_2026_008', 'HUN_PLAKAT_2026_013')" class="px-3 py-1.5 rounded-lg bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-medium transition">
+              Preset 2: Állami Óriásplakát vs. TISZA Lakossági Kerítésmolinó
+            </button>
+            <button onclick="loadPreset('HUN_PLAKAT_2025_005', 'HUN_PLAKAT_2025_006')" class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-medium transition">
+              Preset 3: 2025 Őszi Dualitás (Bábozó Brüsszel vs. Családbarát Adó)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-800">
+          <div>
+            <label class="block text-xs font-mono uppercase text-blue-400 mb-1">„A” Vizsgálati egység kiválasztása</label>
+            <select id="compare-select-a" onchange="renderComparison()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase text-emerald-400 mb-1">„B” Vizsgálati egység kiválasztása</label>
+            <select id="compare-select-b" onchange="renderComparison()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kétoszlopos vizuális és analitikai összehasonlítás -->
+      <div id="comparison-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+
+      <!-- Szintetizáló komparatív mátrix -->
+      <div class="glass-card p-5 rounded-xl">
+        <h3 class="text-base font-bold text-white mb-3">Strukturált Komparatív Elemzési Mátrix</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="py-2.5 px-3 w-1/4">Elemzési dimenzió</th>
+                <th class="py-2.5 px-3 w-3/8 text-blue-400" id="matrix-head-a">Plakát A</th>
+                <th class="py-2.5 px-3 w-3/8 text-emerald-400" id="matrix-head-b">Plakát B</th>
+              </tr>
+            </thead>
+            <tbody id="comparison-matrix-body" class="divide-y divide-slate-800/70"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. FÜL: POLITOLÓGIAI ÉS MÉDIATUDOMÁNYI HÁTTÉR -->
+    <!-- ========================================== -->
+    <section id="view-theory" class="hidden space-y-6">
+      <div class="glass-card p-6 rounded-xl space-y-4">
+        <span class="px-2.5 py-1 text-xs font-mono uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded">
+          Elméleti Keretrendszer & Szakmai Háttér
+        </span>
+        <h2 class="text-2xl font-extrabold text-white">
+          A 2025–2026-os Magyar Outdoor Kampány Politológiai és Médiakommunikációs Struktúrája
+        </h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          A korpuszban szereplő 13 dokumentált sajtófotó nem pusztán választási plakátok gyűjteménye, hanem a kortárs magyar <strong class="text-white">kompetitív autoriter / hibrid médiarendszer</strong> és a <strong class="text-white">permanens kampány</strong> tankönyvi esettanulmány-sorozata. Az alábbi négy analitikai pillér adja a kutatási adatbázis elméleti hátterét.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1. Triádikus kampányarchitektúra -->
+        <div class="glass-card p-6 rounded-xl space-y-3 border-t-4 border-t-red-500">
+          <div class="text-xs font-mono text-red-400 uppercase">1. Intézményi Politológia & Kampányfinanszírozás</div>
+          <h3 class="text-lg font-bold text-white">Triádikus Kampányarchitektúra és Szerepmegosztás</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            A Fidesz-tábor közterületi kommunikációja három, jogilag elkülönülő, de politikailag szinkronizált csatornán fut (ennek látványos bizonyítéka a <code class="text-blue-300">HUN_PLAKAT_2026_008</code> és <code class="text-blue-300">009</code> óbudai Szentendrei úti plakátfala):
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc pl-5">
+            <li><strong class="text-white">Hivatalos Pártkampány (Fidesz–KDNP):</strong> Kizárólag a nyugodt erőt, kormányzóképességet és pozitív/konzervatív stabilitást sugározza (<em>„A biztos választás”</em> – <code class="text-blue-300">HUN_PLAKAT_2026_010</code>).</li>
+            <li><strong class="text-white">Állami Hirdetések (Miniszterelnöki Kabinetiroda):</strong> Közpénzből finanszírozott „tájékoztató kampányok” (VOKS 2025, Nemzeti Konzultáció, Nemzeti Petíció, Védett üzemanyagár – 95: 595 Ft, D: 615 Ft), amelyek a kampányköltség-plafonon kívül tematizálják a szuverenitásvédelmi és jóléti kérdéseket.</li>
+            <li><strong class="text-white">Harmadik Feles Proxy Szervezetek (Nemzeti Ellenállás Mozgalom – Apáti Bence):</strong> A közvetlen személyeskedést, gúnyolódást és karaktertámadást (<em>„Mint két tojás”</em>, <em>„Én, a kétarcú”</em>, <em>„Igenis! Nem tud nekik nemet mondani”</em>) kiszervezik civil/non-profit entitásoknak, így a negatív kampány elhatárolható marad a miniszterelnöki imázstól.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Hordozó-aszimmetria -->
+        <div class="glass-card p-6 rounded-xl space-y-3 border-t-4 border-t-blue-500">
+          <div class="text-xs font-mono text-blue-400 uppercase">2. Médiatudomány & Nyilvánosságszerkezet</div>
+          <h3 class="text-lg font-bold text-white">Hordozó-aszimmetria: Outdoor Media Capture vs. Peer-to-Peer</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            A 2025–2026-os ciklus legfontosabb médiapiaci jelensége a fizikai hirdetőfelületekhez való egyenlőtlen hozzáférés:
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc pl-5">
+            <li><strong class="text-white">Intézményi óriásplakát-monopólium (12 m² Eurobillboard & Hirdetőoszlop):</strong> A klasszikus közterületi óriásplakátok, hengeres hirdetőoszlopok (<code class="text-blue-300">001</code>, <code class="text-blue-300">002</code>) és buszmegálló citylight vitrinek (<code class="text-blue-300">003</code>) felett a kormányzati és kormánypárti szereplők gyakorolnak hegemóniát.</li>
+            <li><strong class="text-white">Kandeláber-politika és mikro-hordozók:</strong> Az óriásplakát-cégek elzárkózása miatt az ellenzéki pártok (TISZA Párt, DK – lásd <code class="text-blue-300">010</code> és <code class="text-blue-300">012</code>) villanyoszlopokra gyorskötözővel rögzített B1/A1-es hullámpolitén táblákra szorultak.</li>
+            <li><strong class="text-white">Lakossági „Peer-to-Peer” Outdoor (<code class="text-blue-300">HUN_PLAKAT_2026_013</code>):</strong> A TISZA Párt a szimpatizánsok saját családi házainak kerítéseit, erkélyeit és ablakait alakította át decentralizált hirdetőhálózattá (<em>„Most vagy soha!”</em> molinók), ami magas helyi hitelességet (social proof) eredményezett.</li>
+          </ul>
+        </div>
+
+        <!-- 3. Vizuális szemiotika -->
+        <div class="glass-card p-6 rounded-xl space-y-3 border-t-4 border-t-amber-500">
+          <div class="text-xs font-mono text-amber-400 uppercase">3. Vizuális Szemiotika & Keretezés (Framing)</div>
+          <h3 class="text-lg font-bold text-white">Báb-metafora, Képregény-esztétika és Vizuális Kontraszt</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            A plakátok vizuális nyelve tudatos kognitív keretezési sémákat alkalmaz:
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc pl-5">
+            <li><strong class="text-white">Alárendeltségi és Báb-szemiotika:</strong> Ursula von der Leyen marionett-zsinórokat mozgató kezei (<code class="text-blue-300">005</code>), a tenyerét nyújtó Zelenszkij (<code class="text-blue-300">008</code>) vagy a meghajoló Magyar Péter (<code class="text-blue-300">009</code>) a szuverenitásvesztést vizuális evidencia-élménnyé sűríti.</li>
+            <li><strong class="text-white">Pop-art és Mém-átirat:</strong> A <em>„Volt egy zápor”</em> (<code class="text-blue-300">004</code>) rózsaszín fürdőkádban ülő, kézitükröt tartó Magyar Péter-ábrázolása, illetve az <em>„Én, a kétarcú”</em> (<code class="text-blue-300">009</code>) arcfelező montázsa az internetes mémkultúrát emeli át fizikai óriásplakátra.</li>
+            <li><strong class="text-white">Színkódolt érzelmi polarizáció:</strong> A fenyegetést közvetítő plakátok hideg acélkéket, feketét és vészjelző vörös stoptáblát használnak, míg a pozitív kormányzati üzenetek (<code class="text-blue-300">006</code>, <code class="text-blue-300">010</code>) meleg, napfényes vagy tiszta fehér-narancs kompozícióval operálnak.</li>
+          </ul>
+        </div>
+
+        <!-- 4. Időbeli dinamika -->
+        <div class="glass-card p-6 rounded-xl space-y-3 border-t-4 border-t-emerald-500">
+          <div class="text-xs font-mono text-emerald-400 uppercase">4. Kampánydinamika & Időzítés</div>
+          <h3 class="text-lg font-bold text-white">A 2025–2026-os Kampányciklus 4 Hulláma</h3>
+          <ol class="space-y-2 text-xs sm:text-sm text-slate-300 list-decimal pl-5">
+            <li><strong class="text-white">Geopolitikai alapozás (2025. április – július):</strong> VOKS 2025 Ukrajna EU-tagsága ellen (<code class="text-blue-300">001</code>, <code class="text-blue-300">002</code>) és Magyar Péter összeillesztése Zelenszkijjel (<code class="text-blue-300">003</code>).</li>
+            <li><strong class="text-white">Őszi gazdasági keretezés (2025. október – december):</strong> Nemzeti Konzultáció az adóemelésről vs. családi adócsökkentés (<code class="text-blue-300">005</code>, <code class="text-blue-300">006</code>), valamint helyi jelölti teaser kampányok (<code class="text-blue-300">007</code>).</li>
+            <li><strong class="text-white">Előkampány és totális plakátfalak (2026. február):</strong> Nemzeti Petíció (<em>„Nem fizetünk!”</em> – <code class="text-blue-300">008</code>) és a NEM 3 részes óriásplakát-sorozata (<code class="text-blue-300">009</code>), párhuzamosan a hivatalos jelölti táblák megjelenésével (<code class="text-blue-300">010</code>, <code class="text-blue-300">012</code>).</li>
+            <li><strong class="text-white">Kampányhajrá és választás utáni csend (2026. március – április):</strong> TISZA lakossági molinók (<code class="text-blue-300">013</code>), a választás előtti utolsó héten bevetett 595/615 Ft-os védett üzemanyagár-kampány (<code class="text-blue-300">011</code>), majd az április 12-i választás utáni kék-fehér papírral való leragasztás (<code class="text-blue-300">009</code>).</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. FÜL: ÚJ PLAKÁT RÖGZÍTÉSE & EXPORT       -->
+    <!-- ========================================== -->
+    <section id="view-add" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 glass-card p-6 rounded-xl space-y-4">
+          <h2 class="text-lg font-bold text-white">Új Politikai Plakát Rekord Hozzáadása (ParlLawSpeech Szabvány)</h2>
+          <form id="add-poster-form" onsubmit="addNewPoster(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div>
+              <label class="block text-slate-400 mb-1">Rekord ID</label>
+              <input type="text" id="new-id" required placeholder="pl. HUN_PLAKAT_2026_014" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Dokumentálás dátuma</label>
+              <input type="date" id="new-date" required value="2026-04-10" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Politikai tábor</label>
+              <select id="new-camp" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                <option value="FIDESZ-TÁBOR">FIDESZ-TÁBOR</option>
+                <option value="TISZA PÁRT">TISZA PÁRT</option>
+                <option value="EGYÉB ELLENZÉK">EGYÉB ELLENZÉK (DK / MKKP / Mi Hazánk)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Kibocsátó kategóriája</label>
+              <select id="new-actor" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                <option value="STATE">Állami hirdetés (Kabinetiroda)</option>
+                <option value="PROXY">Harmadik feles proxy (NEM / CÖF)</option>
+                <option value="PARTY">Hivatalos pártplakát</option>
+                <option value="GRASSROOTS">Lakossági grassroots felület</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Hivatalos Kiadó / Impresszum</label>
+              <input type="text" id="new-publisher" required placeholder="pl. Magyarország Kormánya / TISZA Párt" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Plakát fő szlogenje / felirata</label>
+              <input type="text" id="new-slogan" required placeholder="pl. „VOKS 2025 – Ne hagyjuk, hogy a fejünk felett döntsenek!”" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Képfájl elérési útja</label>
+              <input type="text" id="new-img" required placeholder="vagott_kepek/HUN_PLAKAT_2026_014.jpg" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Hordozó formátuma és mérete</label>
+              <input type="text" id="new-format" required placeholder="Óriásplakát (504 x 238 cm, 12 m2)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Vizuális leírás (Szemiotikai leltár)</label>
+              <textarea id="new-visual" rows="2" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white"></textarea>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Politikai kommunikációs elemzés</label>
+              <textarea id="new-analysis" rows="2" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white"></textarea>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Sajtóforrás & Fotós</label>
+              <input type="text" id="new-source" required placeholder="Telex / HVG / 444.hu" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Forráscikk URL</label>
+              <input type="url" id="new-url" required placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white">
+            </div>
+            <div class="sm:col-span-2 pt-2">
+              <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition">
+                Rekord mentése a korpuszba
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="glass-card p-6 rounded-xl space-y-4">
+          <h3 class="text-base font-bold text-white">Adatbázis Exportálása (JSON / CSV)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            A korpusz bármikor exportálható szabványos JSON vagy CSV formátumban R, Python vagy SPSS statisztikai elemzéshez.
+          </p>
+          <div class="space-y-2.5 pt-2">
+            <button onclick="exportData('json')" class="w-full py-2.5 px-4 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 font-semibold rounded-lg text-xs sm:text-sm transition">
+              ⬇ ParlLawSpeech JSON Korpusz Letöltése
+            </button>
+            <button onclick="exportData('csv')" class="w-full py-2.5 px-4 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 font-semibold rounded-lg text-xs sm:text-sm transition">
+              ⬇ Táblázatos CSV Export (Excel / SPSS)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RÉSZLETES ELEMZŐ ÉS IDÉZETGENERÁTOR MODAL -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl p-6 space-y-5 border border-slate-700">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <span id="modal-id" class="font-mono text-xs text-blue-400"></span>
+          <h3 id="modal-title" class="text-lg sm:text-xl font-bold text-white mt-1"></h3>
+        </div>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <div id="modal-body" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================================
+    // ADATBÁZIS: A 13 DOKUMENTÁLT POLITIKAI PLAKÁT (A BEKÜLDÖTT SAJTÓFOTÓK ALAPJÁN)
+    // ============================================================================
+    const postersData = [
+      {
+        id: "HUN_PLAKAT_2025_001",
+        date: "2025-04-06",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (VOKS 2025)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2025_001.jpg",
+        slogan: "„VOKS 2025 – Ne hagyjuk, hogy a fejünk felett döntsenek!”",
+        visual: "Utcai hengeres hirdetőoszlopra (Litfaß-oszlopra) ragasztási folyamat közben fotózott plakát: elöl szigorúan néző Volodimir Zelenszkij, mögötte mosolygó Ursula von der Leyen és nevető Manfred Weber fekete-fehér portréja piros-fehér nyílgrafika előtt, alul VOKS [X] 2025 logó.",
+        format: "Hengeres hirdetőoszlop & Óriásplakát / Eurobillboard (12 m²)",
+        tone: "NEGATIVE",
+        toneLabel: "Elrettentő / Szuverenitásvédelmi",
+        target: "Volodimir Zelenszkij, Ursula von der Leyen, Manfred Weber",
+        semiotics: "Vertikális fenyegetés-hierarchia (felülről letekintő brüsszeli vezetők), fekete-fehér deheroizáló portrék, piros vészjelző ék.",
+        analysis: "Ukrajna EU-csatlakozását közvetlen biztonsági és gazdasági fenyegetésként keretező kormányzati kampány, amely a véleménynyilvánító szavazással (VOKS 2025) tematizálta a tavaszi politikai napirendet.",
+        sourceName: "444.hu",
+        photographer: "444.hu",
+        location: "Budapest / Országos",
+        url: "https://444.hu/2025/04/06/itt-az-uj-plakatkampany-zelenszkij-szigoruan-nez-von-der-leyen-onelegulten-mosolyog-weber-pedig-ordogien-nevet"
+      },
+      {
+        id: "HUN_PLAKAT_2025_002",
+        date: "2025-07-01",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (VOKS 2025 utókampány)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2025_002.jpg",
+        slogan: "„Megmutattuk, hogy van véleményünk! 2 millió nem Ukrajna EU-tagságára!”",
+        visual: "Hengeres utcai hirdetőoszlopon látható sötét tónusú plakát, középen magyar zászlókat lengető tömegfotóból megformált óriási X-szimbólummal és nagy fehér nagybetűs felirattal.",
+        format: "Hengeres hirdetőoszlop & Óriásplakát / Eurobillboard (12 m²)",
+        tone: "MOBILIZING",
+        toneLabel: "Többséget demonstráló / Megerősítő",
+        target: "Brüsszel, Ukrajna EU-csatlakozása",
+        semiotics: "Az X-szimbólum (szavazólap és stoptábla egyszerre) kitöltése nemzeti zászlós tömeggel: a kormányzati álláspontot népi konszenzusként jeleníti meg.",
+        analysis: "A véleménynyilvánító szavazás eredményét hirdető állami utókampány, amely a 2 milliós nem szavazat felmutatásával demokratikus többséget demonstrált a kormány vétópolitikája mögött.",
+        sourceName: "HVG",
+        photographer: "Cabrera Martin / HVG",
+        location: "Budapest",
+        url: "https://hvg.hu/itthon/20250701_Uj-ukranellenes-plakatokkal-jelentkezett-a-kormany"
+      },
+      {
+        id: "HUN_PLAKAT_2025_003",
+        date: "2025-07-02",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "PROXY",
+        actorLabel: "Harmadik feles negatív kampány (NEM)",
+        publisher: "Nemzeti Ellenállás Mozgalom (Ellenállás Mozgalom Non-Profit Kft. – Apáti Bence)",
+        fileName: "HUN_PLAKAT_2025_003.jpg",
+        slogan: "„MINT KÉT TOJÁS – Zelenszkij / A magyar Zelenszkij”",
+        visual: "Villamos-/buszmegálló citylight vitrinjében elhelyezett plakát: két törött tojáshéjban ülő, öltönyös, ukrán zászlót lengető Volodimir Zelenszkij és Magyar Péter karikatúra-montázsa kék háttér előtt.",
+        format: "Citylight vitrin (118,5 x 175 cm) & Óriásplakát (12 m²)",
+        tone: "NEGATIVE",
+        toneLabel: "Szatirikus karaktertámadás / Összemosás",
+        target: "Magyar Péter, Volodimir Zelenszkij",
+        semiotics: "Infantilizáló karikatúra (tojáshéjból kikelt ikrek), az ellenfél vizuális megfosztása a nemzeti szuverenitástól (ukrán zászló Magyar Péter kezében).",
+        analysis: "Az Apáti Bence-féle Nemzeti Ellenállás Mozgalom plakátja vizuálisan mosta össze Magyar Pétert Zelenszkijjel; a kampány diplomáciai vihart kavart, Kijev bekérette a magyar nagykövetet.",
+        sourceName: "444.hu",
+        photographer: "Mészáros Juli / 444.hu",
+        location: "Budapest",
+        url: "https://444.hu/2025/07/02/dedokampanyban-mossa-ossze-az-apati-fele-mozgalom-zelenszkijt-es-magyar-petert"
+      },
+      {
+        id: "HUN_PLAKAT_2025_004",
+        date: "2025-07-12",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "PROXY",
+        actorLabel: "Mobil teherautós ellenkampány",
+        publisher: "Kormánypárti kampányfelület",
+        fileName: "HUN_PLAKAT_2025_004.jpg",
+        slogan: "„Volt egy zápor 😎”",
+        visual: "A Tisza Párt nagykanizsai kongresszusának parkolójában leállított fehér kisteherautóra szerelt óriásplakát: viharos, villámló tengeren úszó rózsaszín fürdőkádban ülő, napszemüveges, kezében kézitükröt tartó öltönyös Magyar Péter.",
+        format: "Mobil óriásplakát teherautón (504 x 238 cm)",
+        tone: "NEGATIVE",
+        toneLabel: "Helyszíni gerilla-trollkampány / Ironikus",
+        target: "Magyar Péter",
+        semiotics: "Nárcizmus-szimbólumok (rózsaszín kád, arany kézitükör, napszemüveg emoji) szembeállítva a pusztító viharral: az empátiahiány és elitizmus vizuális vádja.",
+        analysis: "Célzott helyszíni trollkampány a Tisza Párt nagykanizsai kongresszusán, amely Magyar Péter nyári viharral kapcsolatos nyilatkozatát igyekezett komolytalanná tenni.",
+        sourceName: "Telex",
+        photographer: "Telex",
+        location: "Nagykanizsa",
+        url: "https://telex.hu/belfold/2025/12/magyar-petert-gunyolo-plakat-varja-a-tiszasokat-a-kongresszus-helyszinen"
+      },
+      {
+        id: "HUN_PLAKAT_2025_005",
+        date: "2025-10-04",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (Nemzeti Konzultáció 2025 ősz)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2025_005.jpg",
+        slogan: "„Brüsszel bábjai adót akarnak emelni! – Tiltakozzunk az adóemelés ellen!”",
+        visual: "Épület homlokzatára rögzített óriásplakát: sárga blézerben mosolygó Ursula von der Leyen mindkét kezével fajáték marionett-kereszteket és zsinórokat mozgat, jobb oldalon piros körben fehér felirat.",
+        format: "Óriásplakát / Eurobillboard (504 x 238 cm, 12 m²)",
+        tone: "NEGATIVE",
+        toneLabel: "Szuverenitásvédelmi / Gazdasági elrettentő",
+        target: "Ursula von der Leyen, Brüsszel, hazai ellenzék",
+        semiotics: "Klasszikus összeesküvés- és befolyás-szemiotika: a fizikai marionett-kereszt láthatóvá teszi a „háttérhatalmi irányítást”.",
+        analysis: "Az őszi Nemzeti Konzultációt népszerűsítő állami hirdetés, amely az ellenzéknek tulajdonított adóemelési terveket közvetlen brüsszeli megrendelésként keretezte.",
+        sourceName: "HVG",
+        photographer: "Túry Gergely / HVG",
+        location: "Budapest",
+        url: "https://hvg.hu/itthon/20251004_Ursula-Von-der-Leyen-babozas-nemzeti-konzultacio-plakat-ebx"
+      },
+      {
+        id: "HUN_PLAKAT_2025_006",
+        date: "2025-10-04",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (Családi adócsökkentés)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2025_006.jpg",
+        slogan: "„A családi adócsökkentés az Ön családjának is jár!”",
+        visual: "Mosolygó, világos ruhás magyar család közös étkezés közben, meleg, napfényes megvilágítású életkép kormányzati arculati sávval.",
+        format: "Óriásplakát / Eurobillboard (504 x 238 cm, 12 m²)",
+        tone: "POSITIVE",
+        toneLabel: "Pozitív jóléti / Gondoskodó állam",
+        target: "Gyermekes családok, középosztály",
+        semiotics: "Meleg színhőmérséklet, harmonikus családi asztal: a biztonságot nyújtó kormányzat vizuális ellenpontja a hideg kék „bábozós” plakátoknak.",
+        analysis: "A bábozós negatív konzultációs plakátokkal egy időben futó pozitív állami imázskampány (jó zsaru / rossz zsaru kommunikációs kettős).",
+        sourceName: "HVG",
+        photographer: "Túry Gergely / HVG",
+        location: "Budapest",
+        url: "https://hvg.hu/itthon/20251004_Ursula-Von-der-Leyen-babozas-nemzeti-konzultacio-plakat-ebx"
+      },
+      {
+        id: "HUN_PLAKAT_2025_007",
+        date: "2025-12-04",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "PARTY",
+        actorLabel: "Helyi egyéni választókerületi teaser plakát",
+        publisher: "Hegyvidéki Fidesz-kampány (Budapest XII. kerület)",
+        fileName: "HUN_PLAKAT_2025_007.jpg",
+        slogan: "„Ki az a Steiner Attila?”",
+        visual: "Fekete-fehér stílusú, férfi sziluettet és kérdőjelet használó figyelemfelkeltő (teaser) plakát a budapesti XII. kerületben, pártlogó nélküli rejtélyes arculattal.",
+        format: "Oszlopplakát / Citylight (B1: 70 x 100 cm)",
+        tone: "MOBILIZING",
+        toneLabel: "Figyelemfelkeltő (Teaser) / Névismertség-építő",
+        target: "Budapest XII. kerületi választók",
+        semiotics: "Kereskedelmi reklámokból átvett „teaser” (kíváncsiságkeltő) technika: a pártlogó elhagyása csökkenti a billegő választók kezdeti kognitív ellenállását.",
+        analysis: "Magyar Péter hegyvidéki választókerületében kihelyezett bevezető kampányplakát a fideszes jelölt, Steiner Attila névismertségének felépítésére.",
+        sourceName: "444.hu",
+        photographer: "Kovács Gergely / Facebook (444.hu)",
+        location: "Budapest, XII. kerület",
+        url: "https://444.hu/2025/12/04/ki-az-a-steiner-attila-feliratu-plakatok-jelentek-meg-magyar-peter-valasztokeruleteben"
+      },
+      {
+        id: "HUN_PLAKAT_2026_008",
+        date: "2026-02-04",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (Nemzeti Petíció 2026)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2026_008.jpg",
+        slogan: "„Üzenjük Brüsszelnek: NEM FIZETÜNK! – Nemzeti Petíció”",
+        visual: "Hosszú utcai plakátsoron (pocsolyában tükröződve) váltakozó állami és NEM-plakátok: bal oldalon Volodimir Zelenszkij nyújtott, pénzt kérő tenyérrel, mellette rámutató Ursula von der Leyen és Manfred Weber; jobb oldalon piros stoptábla-nyolcszögben NEM FIZETÜNK! felirat.",
+        format: "Óriásplakát / Eurobillboard (504 x 238 cm, 12 m²)",
+        tone: "NEGATIVE",
+        toneLabel: "Pénzügyi elrettentő / Szuverenitásvédelmi",
+        target: "Volodimir Zelenszkij, Ursula von der Leyen, Manfred Weber",
+        semiotics: "A néző felé kinyújtott üres tenyér (követelőzés) és a KRESZ stoptáblát idéző vörös nyolcszög („NEM FIZETÜNK!”) azonnali zsigeri elutasítást vált ki.",
+        analysis: "A hivatalos kampányidőszak indulása előtt kihelyezett állami plakátkampány, amely az EU Ukrajna-támogatását közvetlen magyar adófizetői veszteségként mutatta be.",
+        sourceName: "Telex",
+        photographer: "Huszti István / Telex",
+        location: "Budapest / Pécs / Országos",
+        url: "https://telex.hu/belfold/2026/02/21/kampanyidoszak-ajanlasok-gyujtese-jeloles-legfontosabb-tudnivalok"
+      },
+      {
+        id: "HUN_PLAKAT_2026_009",
+        date: "2026-02-04",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "PROXY",
+        actorLabel: "Harmadik feles negatív kampány (NEM sorozat)",
+        publisher: "Nemzeti Ellenállás Mozgalom (Ellenállás Mozgalom Non-Profit Kft. – Apáti Bence)",
+        fileName: "HUN_PLAKAT_2026_009.jpg",
+        slogan: "„ADÓEMELÉST! / GÁZÁREMELÉST! – IGENIS! – NEM TUD NEKIK NEMET MONDANI” + „ÉN, A KÉTARCÚ”",
+        visual: "Az óbudai Szentendrei úti 8-as plakátfal előtte-utána fotón: balra a „Nem fizetünk!”, a „Nem tud nekik nemet mondani” (parancsoló Von der Leyen, meghajló Magyar Péter) és az „Én, a kétarcú” (kék-sárga brüsszeli maszkos Magyar Péter) óriásplakátok; jobbra a választás után világoskék papírral teljesen leragasztott üres táblák.",
+        format: "Óriásplakát-fal / Eurobillboard mátrix (8 x 12 m²)",
+        tone: "NEGATIVE",
+        toneLabel: "Totális vizuális bekerítés / Karaktergyilkosság",
+        target: "Magyar Péter, Ursula von der Leyen",
+        semiotics: "Színházi maszk-metafora („Én, a kétarcú”) és parancs-engedelmesség dialógusbuborékok („Adóemelést! – Igenis!”); a jobb oldali fotón a választás utáni azonnali vizuális tabula rasa.",
+        analysis: "A 2026-os kampány legnagyobb példányszámú negatív plakátsorozata, amely a Szentendrei úti plakátfalon a hivatalos Fidesz-jelölti (Kepes Ádám) és kormányzati plakátokkal szimbiózisban jelent meg.",
+        sourceName: "24.hu",
+        photographer: "Kőrös Gábor / 24.hu",
+        location: "Budapest, III. kerület Kaszásdűlő (Szentendrei út)",
+        url: "https://24.hu/belfold/2026/04/17/obudai-plakatokkal-boritott-haz-vereseg-utan/"
+      },
+      {
+        id: "HUN_PLAKAT_2026_010",
+        date: "2026-02-24",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "PARTY",
+        actorLabel: "Hivatalos párt- és egyéni jelölti választási plakát",
+        publisher: "Fidesz – Magyar Polgári Szövetség – KDNP",
+        fileName: "HUN_PLAKAT_2026_010.jpg",
+        slogan: "„Berkó Attila – A BIZTOS VÁLASZTÁS (Fidesz–KDNP)”",
+        visual: "Kétoszlopos sajtófotó: bal oldalon Berkó Attila (Fidesz–KDNP) fehér hátterű, narancssárga sávos „A BIZTOS VÁLASZTÁS” kandeláberplakátja nemzeti színű sarokívvel; jobb oldalon összehasonlításképp Mészáros Dávid (DK) „Szavazz a baloldal jelöltjére!” választási plakátja.",
+        format: "Oszlop-/kandeláberplakát (B1: 70 x 100 cm) és Óriásplakát",
+        tone: "POSITIVE",
+        toneLabel: "Pozitív / Stabilitásközpontú jelölti imázs",
+        target: "Jász-Nagykun-Szolnok megye 1. OEVK választói / Országos",
+        semiotics: "Letisztult fehér háttér, nyugodt portré, nemzeti trikolór és narancssárga sáv: a hivatalos pártplakát teljesen mentes a negatív elemektől, kiszervezve a konfliktust a proxyknak.",
+        analysis: "A Fidesz–KDNP hivatalos 2026-os pártkampányának központi arculata a kiszámíthatóságot („A biztos választás”) hangsúlyozta, éles munkamegosztásban az állami és NEM-plakátokkal.",
+        sourceName: "Szolnok TV / Hírös.hu",
+        photographer: "Szolnok TV",
+        location: "Szolnok / Országos",
+        url: "https://www.szolnoktv.hu/hirek/egyre-tobb-a-valasztasi-plakat"
+      },
+      {
+        id: "HUN_PLAKAT_2026_011",
+        date: "2026-04-08",
+        camp: "FIDESZ-TÁBOR",
+        actorType: "STATE",
+        actorLabel: "Állami hirdetés (Kampányhajrá gazdasági kampány)",
+        publisher: "Magyarország Kormánya (Miniszterelnöki Kabinetiroda)",
+        fileName: "HUN_PLAKAT_2026_011.jpg",
+        slogan: "„95: 595 Ft/liter | D: 615 Ft/liter – VÉDETT ÁR – A benzin és a gázolaj hazánkban a legolcsóbb Európában”",
+        visual: "Duna-parti útszakasz mellett álló kék kormányzati óriásplakát: bal oldalon benzinkút-árkijelző grafika (95: 595 Ft, D: 615 Ft), piros „VÉDETT ÁR” címke és tankoló pisztoly; jobb oldalon nemzeti pajzs és fehér-arany tipográfia.",
+        format: "Óriásplakát / Eurobillboard (504 x 238 cm, 12 m²)",
+        tone: "POSITIVE",
+        toneLabel: "Jóléti védőpajzs / Kampányhajrá ígéret",
+        target: "Autósok, ingázók, árérzékeny választók",
+        semiotics: "Konkrét numerikus horgonyzás (595 Ft / 615 Ft Totem-számjegyek) és a „Védett ár” katonai-gondoskodó kifejezés: az állam mint a mindennapi megélhetés garantálója.",
+        analysis: "A választás előtti utolsó héten indított állami plakátkampány, amely az inflációs és megélhetési aggodalmakat közvetlen hatósági árkommunikációval igyekezett semlegesíteni.",
+        sourceName: "Telex",
+        photographer: "Zách Dániel / Telex",
+        location: "Budapest (rakpart) / Országos",
+        url: "https://telex.hu/gazdasag/2026/04/08/benzin-gazolaj-uzemanyag-tankolas-kampany-propaganda"
+      },
+      {
+        id: "HUN_PLAKAT_2026_012",
+        date: "2026-02-25",
+        camp: "TISZA PÁRT",
+        actorType: "PARTY",
+        actorLabel: "Hivatalos egyéni képviselőjelölti választási plakát",
+        publisher: "TISZA – Tisztelet és Szabadság Párt",
+        fileName: "HUN_PLAKAT_2026_012.jpg",
+        slogan: "„TISZA – VÁLASZTÁS 2026 (106 egyéni jelölti portré és név)”",
+        visual: "Kandeláberekre és villanyoszlopokra rögzített B1/A1-es jelölti hullámpolitén táblák kék-fehér-piros TISZA arculattal és az egyéni jelöltek portréjával.",
+        format: "Kandeláber- és villanyoszlop-plakát (B1: 70 x 100 cm)",
+        tone: "MOBILIZING",
+        toneLabel: "Helyi jelöltépítő / Intézményesülő",
+        target: "106 egyéni választókerület választói",
+        semiotics: "Egységes országos vizuális sablon helyi arcokkal: a mozgalomból kormányzóképes párttá válás demonstrálása az utcai oszlopokon.",
+        analysis: "Az óriásplakát-cégek bojkottja miatt a TISZA Párt hivatalos közterületi jelölti kampánya kizárólag kandeláberekre rögzített táblákon zajlott.",
+        sourceName: "Kanizsa Médiaház / Szolnok TV",
+        photographer: "Kanizsa Médiaház",
+        location: "Nagykanizsa / Szolnok / Országos",
+        url: "https://kanizsamediahaz.hu/hir/202603/plakaterdo-mar-kanizsat-is-elleptek-a-valasztasi-plakatok"
+      },
+      {
+        id: "HUN_PLAKAT_2026_013",
+        date: "2026-03-01",
+        camp: "TISZA PÁRT",
+        actorType: "GRASSROOTS",
+        actorLabel: "Lakossági erkély-, ablak- és kerítéskampány",
+        publisher: "TISZA – Tisztelet és Szabadság Párt (Szimpatizánsok otthonai)",
+        fileName: "HUN_PLAKAT_2026_013.jpg",
+        slogan: "„TISZA – MOST VAGY SOHA!”",
+        visual: "Kertvárosi családi ház fakerítésére kihelyezett három TISZA-hirdetés egymás mellett: bal oldalon Magyar Péter és a helyi jelölt (Bujdosó Andrea Anna) közös plakátja, középen kisebb tábla, jobb oldalon nagy sötétkék molinó „MOST VAGY SOHA!” felirattal (a „vagy soha!” piros vonallal áthúzva).",
+        format: "Lakossági kerítésmolinó (200 x 100 cm) és kertplakát (A2/B2)",
+        tone: "MOBILIZING",
+        toneLabel: "Grassroots mobilizáló / Történelmi sorsfordító",
+        target: "Szomszédsági közösségek, helyi választók",
+        semiotics: "1848-as történelmi intertextualitás („Most vagy soha!”), ahol a „vagy soha” piros áthúzása a vereség lehetőségét is kizáró elszántságot kódolja; a magánkerítés személyes garanciavállalást jelent.",
+        analysis: "Az óriásplakát-piac állami és kormánypárti dominanciáját a TISZA Párt a szimpatizánsok saját ingatlanjainak (kerítések, erkélyek, ablakok) hirdetőfelületté alakításával kerülte meg.",
+        sourceName: "444.hu / HVG",
+        photographer: "Bábel Vilmos / 444.hu",
+        location: "Országos (lakossági kerítések és erkélyek)",
+        url: "https://444.hu/2026/03/01/a-tiszasok-az-otthonaikra-erositett-plakatokkal-szallnak-be-a-kampanyba"
+      }
+    ];
+
+    let currentLayout = 'grid';
+
+    function handleImageError(imgEl, fileName, id, slogan) {
+      const triedRoot = imgEl.getAttribute('data-tried-root');
+      if (!triedRoot) {
+        imgEl.setAttribute('data-tried-root', 'true');
+        imgEl.src = fileName;
+      } else {
+        const svgFallback = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+          <rect width="600" height="400" fill="#0f172a"/>
+          <rect x="16" y="16" width="568" height="368" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,6"/>
+          <text x="300" y="150" text-anchor="middle" fill="#60a5fa" font-family="monospace" font-size="18" font-weight="bold">${id}</text>
+          <text x="300" y="195" text-anchor="middle" fill="#f8fafc" font-family="sans-serif" font-size="15">Helyezd a képet a vagott_kepek/${fileName} útvonalra!</text>
+          <text x="300" y="235" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="13">${slogan.replace(/"/g, '')}</text>
+        </svg>`;
+        imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFallback);
+      }
+    }
+
+    function getCampBadge(camp) {
+      if (camp === 'FIDESZ-TÁBOR') {
+        return `<span class="px-2.5 py-0.5 text-[11px] font-bold tracking-wider uppercase bg-red-600/20 text-red-400 border border-red-500/40 rounded">FIDESZ-TÁBOR</span>`;
+      }
+      if (camp === 'TISZA PÁRT') {
+        return `<span class="px-2.5 py-0.5 text-[11px] font-bold tracking-wider uppercase bg-blue-600/20 text-blue-400 border border-blue-500/40 rounded">TISZA PÁRT</span>`;
+      }
+      return `<span class="px-2.5 py-0.5 text-[11px] font-bold tracking-wider uppercase bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 rounded">${camp}</span>`;
+    }
+
+    function getActorBadge(actorType, label) {
+      const colors = {
+        STATE: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+        PROXY: "bg-purple-500/15 text-purple-300 border-purple-500/30",
+        PARTY: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+        GRASSROOTS: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"
+      };
+      return `<span class="px-2 py-0.5 text-[11px] font-medium border rounded ${colors[actorType] || ''}">${label}</span>`;
+    }
+
+    function getFilteredPosters() {
+      const search = document.getElementById('filter-search').value.toLowerCase().trim();
+      const camp = document.getElementById('filter-camp').value;
+      const actor = document.getElementById('filter-actor').value;
+      const tone = document.getElementById('filter-tone').value;
+
+      return postersData.filter(p => {
+        const matchSearch = !search ||
+          p.id.toLowerCase().includes(search) ||
+          p.slogan.toLowerCase().includes(search) ||
+          p.visual.toLowerCase().includes(search) ||
+          p.analysis.toLowerCase().includes(search) ||
+          p.publisher.toLowerCase().includes(search) ||
+          p.location.toLowerCase().includes(search);
+        const matchCamp = camp === 'ALL' || p.camp === camp;
+        const matchActor = actor === 'ALL' || p.actorType === actor;
+        const matchTone = tone === 'ALL' || p.tone === tone;
+        return matchSearch && matchCamp && matchActor && matchTone;
+      });
+    }
+
+    function renderCatalog() {
+      const filtered = getFilteredPosters();
+      document.getElementById('filter-count').textContent = `Megjelenítve: ${filtered.length} / ${postersData.length} plakát`;
+
+      // Statisztikák frissítése
+      document.getElementById('stat-total').textContent = `${postersData.length} db`;
+      document.getElementById('stat-fidesz').textContent = `${postersData.filter(p => p.camp === 'FIDESZ-TÁBOR').length} db`;
+      document.getElementById('stat-tisza').textContent = `${postersData.filter(p => p.camp === 'TISZA PÁRT').length} db`;
+
+      // Kártyás nézet renderelése
+      const gridEl = document.getElementById('catalog-grid');
+      gridEl.innerHTML = filtered.map(p => `
+        <article class="glass-card rounded-xl overflow-hidden flex flex-col justify-between hover:border-blue-500/60 transition-all duration-200 group">
+          <div>
+            <!-- Kép konténer -->
+            <div class="relative h-56 bg-slate-950 overflow-hidden border-b border-slate-800">
+              <img src="vagott_kepek/${p.fileName}"
+                   alt="${p.id}"
+                   onerror="handleImageError(this, '${p.fileName}', '${p.id}', '${p.slogan.replace(/'/g, "\\'")}')"
+                   onclick="openModal('${p.id}')"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5">
+                ${getCampBadge(p.camp)}
+              </div>
+              <div class="absolute top-2.5 right-2.5">
+                <span class="px-2 py-0.5 text-[11px] font-mono bg-slate-950/85 text-slate-300 border border-slate-700 rounded">
+                  ${p.date}
+                </span>
+              </div>
+              <div class="absolute bottom-2 left-2.5 right-2.5 flex justify-between items-center">
+                <span class="px-2 py-0.5 text-[10px] font-mono bg-slate-950/90 text-emerald-400 border border-emerald-500/30 rounded">
+                  ✓ vagott_kepek/${p.fileName}
+                </span>
+              </div>
+            </div>
+
+            <!-- Tartalom -->
+            <div class="p-4 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <code class="text-xs font-mono text-blue-400 font-semibold">${p.id}</code>
+                ${getActorBadge(p.actorType, p.actorLabel)}
+              </div>
+
+              <h3 class="text-sm sm:text-base font-bold text-white leading-snug">
+                ${p.slogan}
+              </h3>
+
+              <p class="text-xs text-slate-400 leading-relaxed">
+                <strong class="text-slate-200">Vizuális leírás:</strong> ${p.visual}
+              </p>
+
+              <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                <strong class="text-blue-400">Politológiai elemzés:</strong> ${p.analysis}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 pt-0 space-y-2">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-800/80 pt-2.5">
+              <span>📍 ${p.location}</span>
+              <span>📸 ${p.photographer}</span>
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <button onclick="openModal('${p.id}')" class="flex-1 py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition">
+                Szemiotika & Idézet
+              </button>
+              <button onclick="sendToCompare('${p.id}')" class="py-1.5 px-3 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-300 rounded-lg text-xs font-semibold transition">
+                ⚖ Összehasonlít
+              </button>
+              <a href="${p.url}" target="_blank" class="py-1.5 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition" title="Eredeti sajtócikk megnyitása">
+                ↗
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      // Táblázatos nézet renderelése
+      const tbodyEl = document.getElementById('catalog-table-body');
+      tbodyEl.innerHTML = filtered.map(p => `
+        <tr class="hover:bg-slate-900/50 transition">
+          <td class="p-3.5 align-top whitespace-nowrap">
+            <code class="text-xs font-mono text-blue-400 font-bold">${p.id}</code>
+            <div class="text-xs text-slate-400 mt-1">${p.date}</div>
+            <div class="text-[11px] text-slate-500 mt-1">${p.location}</div>
+          </td>
+          <td class="p-3.5 align-top">
+            ${getCampBadge(p.camp)}
+            <div class="font-semibold text-white text-xs mt-2">${p.publisher}</div>
+            <div class="mt-1">${getActorBadge(p.actorType, p.actorLabel)}</div>
+          </td>
+          <td class="p-3.5 align-top w-64">
+            <img src="vagott_kepek/${p.fileName}"
+                 alt="${p.id}"
+                 onerror="handleImageError(this, '${p.fileName}', '${p.id}', '${p.slogan.replace(/'/g, "\\'")}')"
+                 onclick="openModal('${p.id}')"
+                 class="w-60 h-36 object-cover rounded-lg border border-slate-700 cursor-pointer hover:border-blue-500 transition">
+          </td>
+          <td class="p-3.5 align-top max-w-xs">
+            <div class="font-bold text-white text-xs sm:text-sm">${p.slogan}</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">${p.visual}</p>
+            <div class="text-[11px] text-slate-500 mt-1">Hordozó: ${p.format}</div>
+          </td>
+          <td class="p-3.5 align-top max-w-sm">
+            <p class="text-xs text-slate-300 leading-relaxed">${p.analysis}</p>
+            <p class="text-[11px] text-amber-300/90 mt-1.5"><strong>Szemiotika:</strong> ${p.semiotics}</p>
+          </td>
+          <td class="p-3.5 align-top whitespace-nowrap space-y-1.5">
+            <button onclick="openModal('${p.id}')" class="block w-full py-1 px-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs">Részletek</button>
+            <a href="${p.url}" target="_blank" class="block w-full text-center py-1 px-2.5 bg-blue-600/20 text-blue-300 rounded text-xs">Cikk (${p.sourceName}) ↗</a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function setCatalogLayout(mode) {
+      currentLayout = mode;
+      document.getElementById('catalog-grid').classList.toggle('hidden', mode !== 'grid');
+      document.getElementById('catalog-table-wrap').classList.toggle('hidden', mode !== 'table');
+      document.getElementById('btn-grid').className = mode === 'grid'
+        ? 'px-2.5 py-1 rounded bg-blue-600 text-white font-medium'
+        : 'px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-medium';
+      document.getElementById('btn-table').className = mode === 'table'
+        ? 'px-2.5 py-1 rounded bg-blue-600 text-white font-medium'
+        : 'px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-medium';
+    }
+
+    // ============================================================================
+    // KOMPARATÍV LABOR FUNKCIÓK
+    // ============================================================================
+    function populateCompareSelects() {
+      const selA = document.getElementById('compare-select-a');
+      const selB = document.getElementById('compare-select-b');
+      const optionsHtml = postersData.map(p =>
+        `<option value="${p.id}">${p.id} (${p.date}) — ${p.slogan.slice(0, 55)}...</option>`
+      ).join('');
+      selA.innerHTML = optionsHtml;
+      selB.innerHTML = optionsHtml;
+      selA.value = "HUN_PLAKAT_2026_010";
+      selB.value = "HUN_PLAKAT_2026_009";
+    }
+
+    function loadPreset(idA, idB) {
+      document.getElementById('compare-select-a').value = idA;
+      document.getElementById('compare-select-b').value = idB;
+      renderComparison();
+    }
+
+    function sendToCompare(id) {
+      switchTab('compare');
+      document.getElementById('compare-select-a').value = id;
+      renderComparison();
+    }
+
+    function renderComparison() {
+      const idA = document.getElementById('compare-select-a').value;
+      const idB = document.getElementById('compare-select-b').value;
+      const pA = postersData.find(p => p.id === idA) || postersData[0];
+      const pB = postersData.find(p => p.id === idB) || postersData[1];
+
+      const container = document.getElementById('comparison-container');
+      container.innerHTML = [
+        { p: pA, badge: "„A” VIZSGÁLATI EGYSÉG", border: "border-blue-500/50" },
+        { p: pB, badge: "„B” VIZSGÁLATI EGYSÉG", border: "border-emerald-500/50" }
+      ].map(({ p, badge, border }) => `
+        <div class="glass-card rounded-xl overflow-hidden border ${border} flex flex-col">
+          <div class="p-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-slate-300">${badge}: ${p.id}</span>
+            ${getCampBadge(p.camp)}
+          </div>
+          <div class="h-64 bg-slate-950 overflow-hidden">
+            <img src="vagott_kepek/${p.fileName}"
+                 alt="${p.id}"
+                 onerror="handleImageError(this, '${p.fileName}', '${p.id}', '${p.slogan.replace(/'/g, "\\'")}')"
+                 class="w-full h-full object-cover">
+          </div>
+          <div class="p-5 space-y-3 text-xs sm:text-sm">
+            <div class="font-bold text-white text-base">${p.slogan}</div>
+            <div><strong class="text-slate-400">Kiadó:</strong> <span class="text-slate-200">${p.publisher}</span></div>
+            <div><strong class="text-slate-400">Vizuális leírás:</strong> <span class="text-slate-300">${p.visual}</span></div>
+            <div><strong class="text-slate-400">Szemiotikai kód:</strong> <span class="text-amber-300">${p.semiotics}</span></div>
+            <div><strong class="text-slate-400">Politológiai elemzés:</strong> <span class="text-slate-300">${p.analysis}</span></div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('matrix-head-a').textContent = `${pA.id} (${pA.camp})`;
+      document.getElementById('matrix-head-b').textContent = `${pB.id} (${pB.camp})`;
+
+      const rows = [
+        ["Dokumentálás dátuma & Helyszín", `${pA.date} — ${pA.location}`, `${pB.date} — ${pB.location}`],
+        ["Kibocsátó & Finanszírozási típus", `${pA.publisher} (${pA.actorLabel})`, `${pB.publisher} (${pB.actorLabel})`],
+        ["Fizikai hordozó & Méret", pA.format, pB.format],
+        ["Kommunikációs valencia (Tónus)", pA.toneLabel, pB.toneLabel],
+        ["Célzott szereplő / Célcsoport", pA.target, pB.target],
+        ["Vizuális szemiotikai mechanizmus", pA.semiotics, pB.semiotics],
+        ["Sajtóforrás & Fotós", `${pA.sourceName} (${pA.photographer})`, `${pB.sourceName} (${pB.photographer})`]
+      ];
+
+      document.getElementById('comparison-matrix-body').innerHTML = rows.map(([dim, valA, valB]) => `
+        <tr class="hover:bg-slate-900/40">
+          <td class="py-2.5 px-3 font-semibold text-slate-300">${dim}</td>
+          <td class="py-2.5 px-3 text-slate-300">${valA}</td>
+          <td class="py-2.5 px-3 text-slate-300">${valB}</td>
+        </tr>
+      `).join('');
+    }
+
+    // ============================================================================
+    // MODAL ÉS IDÉZETGENERÁTOR
+    // ============================================================================
+    function openModal(id) {
+      const p = postersData.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('modal-id').textContent = `${p.id} | ${p.date} | ${p.location}`;
+      document.getElementById('modal-title').textContent = p.slogan;
+
+      const apaCitation = `${p.publisher}. (${p.date.slice(0,4)}). ${p.slogan} [Politikai közterületi plakát, ${p.id}]. Fotó: ${p.photographer} (${p.sourceName}). ParlLawSpeech Magyar Politikai Plakát Adatbázis. Elérés: ${p.url}`;
+
+      document.getElementById('modal-body').innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="bg-slate-950 rounded-xl overflow-hidden border border-slate-800">
+            <img src="vagott_kepek/${p.fileName}"
+                 alt="${p.id}"
+                 onerror="handleImageError(this, '${p.fileName}', '${p.id}', '${p.slogan.replace(/'/g, "\\'")}')"
+                 class="w-full h-auto object-contain max-h-96 mx-auto">
+          </div>
+          <div class="space-y-3 text-xs sm:text-sm">
+            <div class="flex flex-wrap gap-2">${getCampBadge(p.camp)} ${getActorBadge(p.actorType, p.actorLabel)}</div>
+            <p><strong class="text-slate-400">Hivatalos kiadó:</strong> ${p.publisher}</p>
+            <p><strong class="text-slate-400">Hordozó formátuma:</strong> ${p.format}</p>
+            <p><strong class="text-slate-400">Vizuális leírás:</strong> ${p.visual}</p>
+            <p><strong class="text-amber-400">Vizuális szemiotika:</strong> ${p.semiotics}</p>
+            <p><strong class="text-blue-400">Politológiai elemzés:</strong> ${p.analysis}</p>
+            <p><strong class="text-slate-400">Forrás:</strong> ${p.sourceName} (Fotó: ${p.photographer}) — <a href="${p.url}" target="_blank" class="text-blue-400 underline">Cikk megnyitása ↗</a></p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+          <div class="text-xs font-mono uppercase text-slate-400">Tudományos hivatkozás (APA 7th / ParlLawSpeech szabvány):</div>
+          <div class="text-xs font-mono text-slate-200 select-all bg-slate-950 p-2.5 rounded border border-slate-800">${apaCitation}</div>
+        </div>
+      `;
+      document.getElementById('detail-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+    }
+
+    // ============================================================================
+    // ÚJ PLAKÁT HOZZÁADÁSA ÉS ADATEXPORT
+    // ============================================================================
+    function addNewPoster(e) {
+      e.preventDefault();
+      const rawPath = document.getElementById('new-img').value.trim();
+      const fileName = rawPath.replace(/^vagott_kepek\//, '');
+      const newRec = {
+        id: document.getElementById('new-id').value.trim(),
+        date: document.getElementById('new-date').value,
+        camp: document.getElementById('new-camp').value,
+        actorType: document.getElementById('new-actor').value,
+        actorLabel: document.getElementById('new-actor').selectedOptions[0].text,
+        publisher: document.getElementById('new-publisher').value.trim(),
+        fileName: fileName,
+        slogan: document.getElementById('new-slogan').value.trim(),
+        visual: document.getElementById('new-visual').value.trim(),
+        format: document.getElementById('new-format').value.trim(),
+        tone: "MOBILIZING",
+        toneLabel: "Kutatói bővítés",
+        target: "Választópolgárok",
+        semiotics: "Egyedi kutatói rögzítés.",
+        analysis: document.getElementById('new-analysis').value.trim(),
+        sourceName: document.getElementById('new-source').value.trim(),
+        photographer: document.getElementById('new-source').value.trim(),
+        location: "Magyarország",
+        url: document.getElementById('new-url').value.trim()
+      };
+      postersData.push(newRec);
+      populateCompareSelects();
+      renderCatalog();
+      switchTab('catalog');
+      e.target.reset();
+    }
+
+    function exportData(type) {
+      if (type === 'json') {
+        const blob = new Blob([JSON.stringify(postersData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ParlLawSpeech_Plakat_Korpusz_2025_2026.json';
+        a.click();
+      } else {
+        const headers = ['ID', 'Datum', 'Tabor', 'Kibocsato', 'Fajlnev', 'Szlogen', 'Formatum', 'Forras', 'URL'];
+        const rows = postersData.map(p => [
+          p.id, p.date, p.camp, `"${p.publisher.replace(/"/g, '""')}"`,
+          `vagott_kepek/${p.fileName}`, `"${p.slogan.replace(/"/g, '""')}"`,
+          `"${p.format.replace(/"/g, '""')}"`, `"${p.sourceName}"`, p.url
+        ]);
+        const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ParlLawSpeech_Plakat_Korpusz_2025_2026.csv';
+        a.click();
+      }
+    }
+
+    function switchTab(tab) {
+      ['catalog', 'compare', 'theory', 'add'].forEach(t => {
+        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          btn.className = "tab-active px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all";
+        } else {
+          btn.className = "bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all";
+        }
+      });
+    }
+
+    // Inicializálás
+    window.addEventListener('DOMContentLoaded', () => {
+      populateCompareSelects();
+      renderCatalog();
+      renderComparison();
+    });
+  </script>
+</body>
+</html>

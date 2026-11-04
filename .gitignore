@@ -1,0 +1,17 @@
+# Titkok és kulcsok kizárása
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+
+# Nyers scraping adatok és átmeneti fájlok
+data/
+*.tmp
+*.log
+
+# Rendszer- és Python fájlok
+.DS_Store
+__pycache__/
+*.py[cod]
+*$py.class
