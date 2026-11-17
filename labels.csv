@@ -1,0 +1,14 @@
+id,code,reason,sentence,model,prompt_version
+HUN_PLAKAT_2025_001,NEGATIV_TAMADO,Ellenségképek (Zelenszkij Weber) és brüsszeli fenyegetés keretezése.,Ne hagyjuk hogy a fejünk felett döntsenek,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_002,NEGATIV_TAMADO,Ukrajna EU-tagságának elutasítása és fenyegetésként bemutatása.,2 millió nem Ukrajna EU-tagságára,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_003,NEGATIV_TAMADO,Magyar Péter és Zelenszkij gúnyos összemosása tojáshéjban.,MINT KÉT TOJÁS,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_004,NEGATIV_TAMADO,Ellenzéki vezető nyilatkozatának kifigurázása teherautós akcióval.,Volt egy zápor,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_005,NEGATIV_TAMADO,Brüsszeli vezetők adóemeléssel való közvetlen megvádolása.,Brüsszel bábjai adót akarnak emelni,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_006,POZITIV_EPITO,Családtámogatási szakpolitikai eredmény hirdetése mosolygó családdal.,A családi adócsökkentés az Ön családjának is jár,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2025_007,TEASER_SEMLEGES,Ismeretlen jelölt bevezetése sziluettel negatív vádak nélkül.,Ki az a Steiner Attila,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_008,NEGATIV_TAMADO,Brüsszelnek címzett pénzügyi ellenállás és elutasítás.,Üzenjük Brüsszelnek NEM FIZETÜNK,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_009,NEGATIV_TAMADO,Magyar Péter bábként való bemutatása brüsszeli követelések előtt.,NEM TUD NEKIK NEMET MONDANI,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_010,POZITIV_EPITO,Hivatalos pártjelölti stabilitást hangsúlyozó arculati plakát.,A BIZTOS VÁLASZTÁS,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_011,POZITIV_EPITO,Kormányzati rezsivédelmi és alacsony üzemanyagár eredménykommunikáció.,A benzin és a gázolaj hazánkban a legolcsóbb Európában,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_012,POZITIV_EPITO,Tisza párti egyéni jelölti bemutatkozó kandelábertábla.,TISZA VÁLASZTÁS 2026,Gemini-3.8-Flash,v1.0
+HUN_PLAKAT_2026_013,POZITIV_EPITO,Lakossági grassroots remény és választási mozgósítás magánfelületeken.,Most vagy soha,Gemini-3.8-Flash,v1.0

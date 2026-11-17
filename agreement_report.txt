@@ -1,0 +1,16 @@
+hand rows: 13 · machine rows: 13 · matched by 'id': 13
+matched units: 13 · exact agreement: 1.000 · Cohen's kappa: 1.000
+
+per category (reference = first file / first coder):
+code             n_ref   base   prec   rec    F1
+NEGATIV_TAMADO       7   0.54   1.00  1.00  1.00  (n < 10: no verdict)
+POZITIV_EPITO        5   0.38   1.00  1.00  1.00  (n < 10: no verdict)
+TEASER_SEMLEGES      1   0.08   1.00  1.00  1.00  (n < 10: no verdict)
+
+confusion matrix (rows = reference, columns = compared):
+                  NEGATIV_TAMADO   POZITIV_EPITO TEASER_SEMLEGES
+NEGATIV_TAMADO                 7               0               0
+POZITIV_EPITO                  0               5               0
+TEASER_SEMLEGES                0               0               1
+
+mismatches: 0

@@ -1,0 +1,6 @@
+discover_lite run 2026-11-17 16:15
+command: /Users/blaseco/Desktop/bibo_session3_skills/vdiscover/scripts/discover_lite.py /Users/blaseco/Desktop/ai kurzus/Plakat_Kutatas_2025_2026/plakat_szovegek_vdiscover.csv --text-col text --id-col id --k 3 --holdout 0.0 --seed 42 --out /Users/blaseco/Desktop/ai kurzus/Plakat_Kutatas_2025_2026/discover_output
+documents: 13 total, 13 discovery, 0 held out (holdout 0.0, seed 42)
+vocabulary: 41 terms (min_df 2, max_df 0.5, 0 extra stop words)
+k rule: fixed k; chosen k = 3, silhouette 0.2196
+outliers: 1 of 13 (7.7%); the count is a setting, not a discovery: read k_scan.csv
