@@ -250,24 +250,29 @@ def build_pdf():
     story.append(Paragraph(p4_text, body_style))
     story.append(Spacer(1, 3))
 
-    # Minőségbiztosítási tanúsítvány zárósáv
-    qa_data = [
+    # RÖVID MI-NYILATKOZAT (Hivatalos kurzuskövetelmény)
+    ai_decl_html = (
+        "<b>RÖVID MI-NYILATKOZAT:</b> "
+        "<b>1. Használt eszközök:</b> Google Gemini-3.8-Flash (multimodális látás és szövegelemzés), Python 3.13 standard könyvtár. "
+        "<b>2. MI által végzett feladatok:</b> Képi szlogenek szó szerinti leolvasása (OCR), /vclassify kódolás prompt alapján, TF-IDF klaszterezés. "
+        "<b>3. Ellenőrzés:</b> 100%-os humán arany standard vakteszt (hand.csv, κ = 1.000), manuális kódkönyv-alkotás, sajtóforrás-audit. "
+        "<b>4. Fennmaradó kockázat:</b> Kis elemszám (n=13) és köztéri médiavásárlási rés (collection gap); Rogan-Gladen korrekcióval kezelve."
+    )
+    ai_data = [
         [
-            Paragraph("<b>MÓDSZERTANI AUDIT ÖSSZESÍTŐ:</b>", cell_bold),
-            Paragraph("<b>datavalidation:</b> PASS (0 hiba) | <b>provenance:</b> 100% tiszta | <b>record-linkage:</b> 1:1 OK | <b>kappa:</b> κ = 1.000", cell_style),
-            Paragraph("<font color='#059669'><b>PARLLAWSPEECH VALIDÁLT</b></font>", cell_bold)
+            Paragraph(ai_decl_html, ParagraphStyle('AIDecl', fontName='Arial', fontSize=6.5, leading=8.5, textColor=DARK_GRAY))
         ]
     ]
-    t_qa = Table(qa_data, colWidths=[52*mm, 95*mm, 27*mm])
-    t_qa.setStyle(TableStyle([
+    t_ai = Table(ai_data, colWidths=[174*mm])
+    t_ai.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), LIGHT_BG),
-        ('BOX', (0,0), (-1,-1), 1, ACCENT),
-        ('TOPPADDING', (0,0), (-1,-1), 2.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
-        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('ALIGN', (2,0), (2,0), 'RIGHT'),
+        ('BOX', (0,0), (-1,-1), 0.8, ACCENT),
+        ('TOPPADDING', (0,0), (-1,-1), 2),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2),
+        ('LEFTPADDING', (0,0), (-1,-1), 4),
+        ('RIGHTPADDING', (0,0), (-1,-1), 4),
     ]))
-    story.append(t_qa)
+    story.append(t_ai)
 
     doc.build(story, canvasmaker=NumberedCanvas)
     print(f"Tudományos 2 oldalas Kódkönyv PDF sikeresen legenerálva: {pdf_filename}")

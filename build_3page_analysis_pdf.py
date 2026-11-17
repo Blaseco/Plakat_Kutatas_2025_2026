@@ -360,15 +360,15 @@ def build_pdf():
     story.append(Paragraph(p3_comp, body_style))
     story.append(Spacer(1, 3))
 
-    story.append(Paragraph("7. Reprodukálhatósági nyilatkozat és Szakirodalom (Block 4 elvárások)", h1_style))
+    story.append(Paragraph("7. Reprodukálhatóság, MI-nyilatkozat és Szakirodalom", h1_style))
     p3_repro = (
-        "<b>Reprodukálhatóság (Slide 40 & 45):</b> A kutatás teljes forráskódja, a strukturált adatbázis (CSV, SQL, DB, JSON), a kódkönyv és a diagramgeneráló scriptek nyilvánosan elérhetők a GitHub repóban: <b>https://github.com/Blaseco/Plakat_Kutatas_2025_2026</b>. "
-        "A teljes kutatási folyamat és minden számadat egyetlen parancssori utasítással ellenőrizhető: <b><code>python3 reproduce.py</code></b>.<br/>"
-        "<b>Hivatkozások (APA 7th):</b><br/>"
-        "• Benoit, K., Conway, D., Lauderdale, B. E., Laver, M., & Mikhaylov, S. (2016). Crowd-sourced text analysis: Reproducible and agile production of political data. <i>APSR</i>, 110(2), 278–295.<br/>"
-        "• Cohen, J. (1960). A coefficient of agreement for nominal scales. <i>Educational and Psychological Measurement</i>, 20(1), 37–46.<br/>"
-        "• Rogan, W. J., & Gladen, B. (1978). Estimating prevalence from the results of a screening test. <i>American Journal of Epidemiology</i>, 107(1), 71–76.<br/>"
-        "• Sebők, M., Berki, B., & Szabó, F. (2021). The Hungarian Legislative Database. <i>poltextLAB Data Releases</i>."
+        "<b>Reprodukálhatóság (Slide 40 & 45):</b> A forráskód, adatkészlet (CSV, SQL, DB) és scriptek elérhetők: <b>github.com/Blaseco/Plakat_Kutatas_2025_2026</b>. Futtatás: <b><code>python3 reproduce.py</code></b>.<br/>"
+        "<b>RÖVID MI-NYILATKOZAT (Kurzuskövetelmény):</b> "
+        "(1) <i>Eszközök:</i> Gemini-3.8-Flash (multimodális látás és kódolás), Python 3.13. "
+        "(2) <i>MI feladata:</i> Szövegleolvasás (OCR), /vclassify kódolás, TF-IDF klaszterezés. "
+        "(3) <i>Ellenőrzés módja:</i> 100%-os humán arany standard vakteszt (hand.csv, κ = 1.000), kézi kódkönyv-alkotás, forrásaudit. "
+        "(4) <i>Fennmaradó kockázat:</i> Kis mintaméret (n=13) és gyűjtési rés (collection gap); Rogan-Gladen kalibrációval kezelve.<br/>"
+        "<b>Hivatkozások:</b> Benoit et al. (2016) <i>APSR</i>; Cohen (1960) <i>EPM</i>; Rogan & Gladen (1978) <i>AJE</i>; Sebők et al. (2021) <i>poltextLAB</i>."
     )
     story.append(Paragraph(p3_repro, body_style))
 
