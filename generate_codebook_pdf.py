@@ -572,7 +572,7 @@ def create_codebook_pdf(csv_path, output_pdf_path, project_dir):
     print(f"[OK] Kódkönyv PDF sikeresen generálva: {output_pdf_path}")
 
 if __name__ == '__main__':
-    project_directory = "/Users/blaseco/Desktop/Plakat_Kutatas_2025_2026"
+    project_directory = os.path.dirname(os.path.abspath(__file__))
     csv_file = os.path.join(project_directory, "plakat_kutatas_korpusz_2025_2026.csv")
     output_pdf = os.path.join(project_directory, "ParlLawSpeech_Plakat_Korpusz_Codebook_2025_2026.pdf")
     create_codebook_pdf(csv_file, output_pdf, project_directory)
