@@ -458,14 +458,56 @@ def create_document():
         p_a.paragraph_format.left_indent = Inches(0.2)
         r_a = p_a.add_run(a)
 
+    doc.add_page_break()
+
+    # -------------------------------------------------------------------------
+    # 6. FEJEZET: TUDOMÁNYOS IRODALOMJEGYZÉK ÉS MÓDSZERTANI HIVATKOZÁSOK
+    # -------------------------------------------------------------------------
+    h1 = doc.add_heading("6. Tudományos Irodalomjegyzék és Módszertani Hivatkozások (References)", level=1)
+    h1.style.font.color.rgb = C_NAVY
+
+    doc.add_paragraph(
+        "A kutatás és az alkalmazott 12 skill elméleti és statisztikai megalapozását az alábbi nemzetközileg elismert "
+        "társadalomtudományi és módszertani szakirodalom biztosítja:"
+    )
+
+    references = [
+        ("Christen, P. (2012). ", "Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection. ", "Springer Science & Business Media. https://doi.org/10.1007/978-3-642-31164-2 [Alkalmazva: record-linkage, datavalidation]"),
+        ("Cohen, J. (1960). ", "A coefficient of agreement for nominal scales. ", "Educational and Psychological Measurement, 20(1), 37–46. https://doi.org/10.1177/001316446002000104 [Alkalmazva: vcoder-agreement κ = 1.000]"),
+        ("Fellegi, I. P., & Sunter, A. B. (1969). ", "A Theory for Record Linkage. ", "Journal of the American Statistical Association, 64(328), 1183–1210. https://doi.org/10.1080/01621459.1969.10501049 [Alkalmazva: record-linkage determinisztikus 1:1 kardinalitás]"),
+        ("Grimmer, J., Roberts, M. E., & Stewart, B. M. (2022). ", "Text as Data: A New Framework for Machine Learning and the Social Sciences. ", "Princeton University Press. [Alkalmazva: vdiscover TF-IDF klaszterezés, vcodebook, vclassify]"),
+        ("Hopkins, D. J., & King, G. (2010). ", "A method of automated nonparametric content analysis for social science. ", "American Journal of Political Science, 54(1), 229–247. https://doi.org/10.1111/j.1540-5907.2009.00428.x [Alkalmazva: vcalibrate prevalencia-becslés]"),
+        ("King, G., Keohane, R. O., & Verba, S. (1994). ", "Designing Social Inquiry: Scientific Inference in Qualitative Research. ", "Princeton University Press. [Alkalmazva: vdescriptives kétváltozós mintaleírás]"),
+        ("Krippendorff, K. (2004). ", "Content Analysis: An Introduction to Its Methodology (2nd ed.). ", "SAGE Publications. [Alkalmazva: vcodebook kategóriahatárok, vcoder-agreement megbízhatóság]"),
+        ("Rogan, W. J., & Gladen, B. (1978). ", "Estimating prevalence from the results of a screening test. ", "American Journal of Epidemiology, 107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510 [Alkalmazva: vcalibrate Rogan-Gladen aránykorrekció]"),
+        ("Schwabish, J. A. (2014). ", "An economist's guide to visualizing data. ", "Journal of Economic Perspectives, 28(1), 209–234. https://doi.org/10.1257/jep.28.1.209 [Alkalmazva: vtable-format booktabs stílus, kutatási grafikonok]"),
+        ("Sebők, M., Berki, B., & Szabó, B. (2021). ", "ParlLawSpeech: A comprehensive dataset of parliamentary speeches and legislative bills. ", "Centre for Social Sciences, Budapest. parllawspeech.org [Alkalmazva: datavalidation, data-provenance-checker, korpusz-architektúra]")
+    ]
+
+    for authors, title, rest in references:
+        p_ref = doc.add_paragraph(style='Normal')
+        p_ref.paragraph_format.left_indent = Inches(0.4)
+        p_ref.paragraph_format.first_line_indent = Inches(-0.4)
+        p_ref.paragraph_format.space_after = Pt(4)
+        r_auth = p_ref.add_run(authors)
+        r_auth.bold = True
+        r_tit = p_ref.add_run(title)
+        r_tit.italic = True
+        r_rst = p_ref.add_run(rest)
+        r_rst.font.size = Pt(8.5)
+
     # Mentés mindkét helyre
     out_docx_repo = os.path.join(BASE_DIR, "Prezentacio_es_Mesterdokumentacio_Plakatkutatas_2025_2026_Varga_Balazs.docx")
     out_docx_parent = os.path.join(PARENT_DIR, "Prezentacio_es_Mesterdokumentacio_Plakatkutatas_2025_2026_Varga_Balazs.docx")
+    out_docx_desktop = "/Users/blaseco/Desktop/Prezentacio_es_Mesterdokumentacio_Plakatkutatas_2025_2026_Varga_Balazs.docx"
+    out_docx_sub = "/Users/blaseco/Desktop/BIBO_BEADANDO_VARGA_BALAZS/Prezentacio_es_Mesterdokumentacio_Plakatkutatas_2025_2026_Varga_Balazs.docx"
     
     doc.save(out_docx_repo)
     shutil.copy2(out_docx_repo, out_docx_parent)
-    print(f"Sikeres mentés: {out_docx_repo}")
-    print(f"Másolat elhelyezve: {out_docx_parent}")
+    shutil.copy2(out_docx_repo, out_docx_desktop)
+    shutil.copy2(out_docx_repo, out_docx_sub)
+    print(f"Sikeres mentés: {out_docx_repo} és másolatai az Asztalra!")
 
 if __name__ == '__main__':
     create_document()
+
