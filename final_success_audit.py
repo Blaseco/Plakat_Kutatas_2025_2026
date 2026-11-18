@@ -78,10 +78,9 @@ def run():
     vp_pages = get_pdf_page_count(vp_path)
     record_test("vposter Skill Specifikáció PDF", vp_pages == 2, f"Oldalszám: {vp_pages} / 2")
 
-    # Prezentációs beszédkönyv
-    sp_path = os.path.join(BASE_DIR, "Prezentacios_Beszed_es_Vedes_10_perc_Varga_Balazs.pdf")
-    sp_pages = get_pdf_page_count(sp_path)
-    record_test("10 perces előadói forgatókönyv PDF", sp_pages == 5, f"Oldalszám: {sp_pages} / 5 (10 dia)")
+    # Kódkönyv Markdown dokumentáció (Slide 4, 18)
+    cb_ok, cb_sz = check_file("CODEBOOK.md")
+    record_test("Hivatalos Kódkönyv Markdown (CODEBOOK.md)", cb_ok, f"{cb_sz:,} bájt")
 
     # 2. ADATBÁZIS FORMÁTUMOK ÉS TELJESSÉG
     print("\n--- 2. ADATBÁZISOK ÉS ADATMINŐSÉG (/datavalidation) ---")
@@ -172,8 +171,8 @@ def run():
     showcase_ok, sh_sz = check_file("vposter_skill_bemutato.html")
     record_test("vposter_skill_bemutato.html (Skill webapp)", showcase_ok, f"{sh_sz:,} bájt")
 
-    cheat_ok, ch_sz = check_file("PREZENTACIOS_PUSKA_ES_FORGATOKONYV.md")
-    record_test("Prezentációs forgatókönyv és puska", cheat_ok, f"{ch_sz:,} bájt")
+    cb_hu_ok, cb_hu_sz = check_file("CODEBOOK_HU.md")
+    record_test("Magyar nyelvű Kódkönyv (CODEBOOK_HU.md)", cb_hu_ok, f"{cb_hu_sz:,} bájt")
 
     readme_ok, rm_sz = check_file("README.md")
     record_test("README.md útmutató az opponensnek", readme_ok, f"{rm_sz:,} bájt")
